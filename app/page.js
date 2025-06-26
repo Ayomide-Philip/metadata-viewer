@@ -6,12 +6,12 @@ export default function Home() {
       <div className="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-xl">
         <div className="md:flex">
           <div className="w-full p-3">
-            <div className="relative h-48 rounded-lg border-dashed border-2 border-blue-700 bg-gray-100 flex justify-center items-center">
+            <div className="relative h-48 rounded-lg border-dashed border-2 border-black bg-gray-100 flex justify-center items-center">
               <div className="absolute">
                 <div className="flex flex-col items-center">
                   <i className="fa fa-folder-open fa-4x text-blue-700"></i>
                   <span className="block text-black font-normal">
-                    Attach you files here
+                    Upload your Image Here
                   </span>
                 </div>
               </div>
