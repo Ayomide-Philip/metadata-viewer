@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import EXIF from "exif-js";
 export default function Home() {
   const [imageUrl, setImageUrl] = useState(null);
   function imageReader(e) {
@@ -12,6 +12,20 @@ export default function Home() {
       reader.readAsDataURL(e.files[0]);
     }
   }
+
+  useEffect(() => {
+    const newImage = new Image();
+    newImage.src = imageUrl;
+
+    newImage.onload = () => {
+      EXIF.getData(newImage, function () {
+        console.log(this);
+        var make = EXIF.getAllTags(this);
+        console.log(make);
+      });
+    };
+  }, [imageUrl]);
+
   return (
     <>
       <div className="py-20 px-2">
@@ -43,7 +57,9 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <img src={imageUrl} height="300px" />
+        {imageUrl !== null ? (
+          <img src={imageUrl} height="300px" width="500px" />
+        ) : null}
       </div>
     </>
   );
