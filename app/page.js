@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useEffect, useState } from "react";
 import EXIF from "exif-js";
@@ -6,9 +7,11 @@ export default function Home() {
   function imageReader(e) {
     if (e.files && e.files[0]) {
       const reader = new FileReader();
-      reader.onload = function (event) {
+
+      reader.onload = (event) => {
         setImageUrl(event.target.result);
       };
+
       reader.readAsDataURL(e.files[0]);
     }
   }
@@ -19,46 +22,53 @@ export default function Home() {
 
     newImage.onload = () => {
       EXIF.getData(newImage, function () {
-        var make = EXIF.getAllTags(this);
-        console.log(make);
+        var tags = EXIF.getAllTags(this);
+        var gps = EXIF.getTag("GPSLatitude");
+        console.log(tags, gps);
       });
     };
   }, [imageUrl]);
 
   return (
     <>
-      <div className="py-20 px-2">
-        <div className="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-xl">
-          <div className="md:flex">
-            <div className="w-full p-3">
-              <div className="relative h-48 rounded-lg border-dashed border-2 border-black bg-gray-100 flex justify-center items-center">
-                <div className="absolute">
-                  <div className="flex flex-col items-center">
-                    <i className="fa fa-folder-open fa-4x text-blue-700"></i>
-                    <span className="block text-black font-normal">
-                      Upload your Image Here
-                    </span>
-                  </div>
-                </div>
+      <div className="py-16 px-4 bg-gradient-to-r from-blue-500 to-indigo-600">
+        <div className="max-w-sm mx-auto bg-white rounded-xl shadow-lg overflow-hidden text-center">
+          {/* Profile Image */}
+          <div className="relative">
+            <img
+              src={imageUrl}
+              alt="Profile"
+              className="w-32 h-32 mx-auto rounded-full border-4 border-white shadow-lg mb-4 image"
+            />
+          </div>
 
-                <input
-                  type="file"
-                  className="h-full w-full opacity-0"
-                  name="photo"
-                  accept="image/*"
-                  onChange={(e) => {
-                    imageReader(e.target);
-                  }}
-                />
+          {/* Upload Area */}
+          <div className="p-6">
+            <div className="relative h-56 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 transition duration-300 ease-in-out flex justify-center items-center">
+              <div className="absolute text-center">
+                <div className="flex flex-col items-center">
+                  <i className="fa fa-upload fa-3x text-indigo-600 mb-2"></i>
+                  <span className="text-xl text-gray-700 font-medium">
+                    Upload your Image
+                  </span>
+                  <p className="text-sm text-gray-500">
+                    Click to select an image file from your device.
+                  </p>
+                </div>
               </div>
+
+              <input
+                type="file"
+                className="h-full w-full opacity-0 cursor-pointer"
+                name="photo"
+                accept="image/*"
+                onChange={(e) => {
+                  imageReader(e.target);
+                }}
+              />
             </div>
           </div>
         </div>
-      </div>
-      <div>
-        {imageUrl !== null ? (
-          <img src={imageUrl} height="300px" width="500px" />
-        ) : null}
       </div>
     </>
   );
