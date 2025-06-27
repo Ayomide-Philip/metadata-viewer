@@ -7,7 +7,6 @@ export default function Home() {
     if (e.files && e.files[0]) {
       const reader = new FileReader();
       reader.onload = function (event) {
-        console.log(event.target.result);
         setImageUrl(event.target.result);
       };
       reader.readAsDataURL(e.files[0]);
