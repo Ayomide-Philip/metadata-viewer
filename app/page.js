@@ -19,7 +19,6 @@ export default function Home() {
 
     newImage.onload = () => {
       EXIF.getData(newImage, function () {
-        console.log(this);
         var make = EXIF.getAllTags(this);
         console.log(make);
       });
