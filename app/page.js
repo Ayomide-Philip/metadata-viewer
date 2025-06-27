@@ -19,17 +19,17 @@ export default function Home() {
 
   useEffect(() => {
     async function getMetaData() {
+      if (!file) return;
       let data = await exifr.parse(file);
-      console.log(latitude, longitude);
+      console.log(data);
     }
     getMetaData();
   }, [file, imageUrl]);
 
   return (
     <>
-      <div className="py-16 px-4 bg-gradient-to-r from-blue-500 to-indigo-600">
+      <div className="py-16 px-4 ">
         <div className="max-w-sm mx-auto bg-white rounded-xl shadow-lg overflow-hidden text-center">
-          {/* Profile Image */}
           <div className="relative">
             <img
               src={
@@ -37,7 +37,7 @@ export default function Home() {
                 "https://gravatar.com/avatar/b1c54e2ffcbf4705dbabe959fd54b15a?s=400&d=robohash&r=x"
               }
               alt="Profile"
-              className="w-32 h-32 mx-auto rounded-full border-4 border-white shadow-lg mb-4 object-cover"
+              className="w-32 h-32 mx-auto rounded-full border-4 border-black shadow-lg mb-4 object-cover"
             />
           </div>
 
