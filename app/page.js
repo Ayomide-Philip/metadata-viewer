@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useEffect, useState } from "react";
-import EXIF from "exif-js";
+import * as exifr from "exifr";
 export default function Home() {
   const [imageUrl, setImageUrl] = useState(null);
+  const [file, setFile] = useState();
   function imageReader(e) {
     if (e.files && e.files[0]) {
       const reader = new FileReader();
@@ -17,17 +18,12 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const newImage = new Image();
-    newImage.src = imageUrl;
-
-    newImage.onload = () => {
-      EXIF.getData(newImage, function () {
-        var tags = EXIF.getAllTags(this);
-        var gps = EXIF.getTag("GPSLatitude");
-        console.log(tags, gps);
-      });
-    };
-  }, [imageUrl]);
+    async function getMetaData() {
+      let data = await exifr.parse(file);
+      console.log(latitude, longitude);
+    }
+    getMetaData();
+  }, [file, imageUrl]);
 
   return (
     <>
@@ -45,7 +41,6 @@ export default function Home() {
             />
           </div>
 
-          {/* Upload Area */}
           <div className="p-6">
             <div className="relative h-56 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 transition duration-300 ease-in-out flex justify-center items-center">
               <div className="absolute text-center">
@@ -67,6 +62,7 @@ export default function Home() {
                 accept="image/*"
                 onChange={(e) => {
                   imageReader(e.target);
+                  setFile(e.target.files[0]);
                 }}
               />
             </div>
