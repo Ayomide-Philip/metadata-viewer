@@ -36,9 +36,12 @@ export default function Home() {
           {/* Profile Image */}
           <div className="relative">
             <img
-              src={imageUrl}
+              src={
+                imageUrl ||
+                "https://gravatar.com/avatar/b1c54e2ffcbf4705dbabe959fd54b15a?s=400&d=robohash&r=x"
+              }
               alt="Profile"
-              className="w-32 h-32 mx-auto rounded-full border-4 border-white shadow-lg mb-4 image"
+              className="w-32 h-32 mx-auto rounded-full border-4 border-white shadow-lg mb-4 object-cover"
             />
           </div>
 
