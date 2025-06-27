@@ -49,9 +49,7 @@ export default function Home() {
               <span className="font-medium text-indigo-700 text-sm">
                 Upload an Image
               </span>
-              <p className="text-xs text-gray-500">
-                Click to browse from device
-              </p>
+              <p className="text-xs text-black">Click to browse from device</p>
               <input
                 id="fileUpload"
                 type="file"
@@ -67,10 +65,10 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="max-w-md mx-auto mt-10 bg-white border border-gray-200 rounded-2xl shadow-lg p-6">
-        <h2 className="text-xl font-semibold text-indigo-700 mb-4 flex items-center gap-2">
+      <div className="max-w-md mx-auto mt-10 bg-white border border-gray-100 rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-indigo-600 text-white px-6 py-4 flex items-center gap-2">
           <svg
-            className="w-5 h-5 text-indigo-600"
+            className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -82,64 +80,73 @@ export default function Home() {
               d="M3 5h2l.4 2M7 5h10l1 2h2m-1 4h-2l-1 6H7l-1-6H4m16 0H4"
             />
           </svg>
-          Image Metadata
-        </h2>
+          <h2 className="text-lg font-semibold tracking-wide">
+            Image Metadata
+          </h2>
+        </div>
 
-        {gottenData ? (
-          <ul className="text-sm text-gray-700 space-y-3">
-            <li>
-              <span className="font-medium">📷 Camera:</span>{" "}
-              {gottenData.Make || "Unknown"} {gottenData.Model || ""}
-            </li>
-            <li>
-              <span className="font-medium">🔍 Lens:</span>{" "}
-              {gottenData.LensModel || "Unknown"}
-            </li>
-            <li>
-              <span className="font-medium">⚙️ Exposure:</span>{" "}
-              {gottenData.ExposureTime ? `${gottenData.ExposureTime}s` : "N/A"}
-            </li>
-            <li>
-              <span className="font-medium">🌡 ISO:</span>{" "}
-              {gottenData.ISO || "N/A"}
-            </li>
-            {gottenData.ImageDescription && (
-              <li>
-                <span className="font-medium">🎯 Description:</span>{" "}
-                {gottenData.ImageDescription}
+        <div className="p-6 text-sm text-gray-700">
+          {gottenData ? (
+            <ul className="space-y-4">
+              <li className="flex justify-between">
+                <span className="text-black font-medium">📷 Camera</span>
+                <span>
+                  {gottenData.Make || "Unknown"} {gottenData.Model || ""}
+                </span>
               </li>
-            )}
-            {gottenData.latitude && gottenData.longitude ? (
-              <li>
-                <span className="font-medium">📍 GPS:</span>{" "}
-                {gottenData.latitude.toFixed(3)}° {gottenData.GPSLatitudeRef},{" "}
-                {gottenData.longitude.toFixed(3)}° {gottenData.GPSLongitudeRef}
+              <li className="flex justify-between">
+                <span className="text-black font-medium">🔍 Lens</span>
+                <span>{gottenData.LensModel || "Unknown"}</span>
               </li>
-            ) : (
-              <li>
-                <span className="font-medium">📍 GPS:</span> Not available
+              <li className="flex justify-between">
+                <span className="text-black font-medium">⚙️ Exposure</span>
+                <span>
+                  {gottenData.ExposureTime
+                    ? `${gottenData.ExposureTime}s`
+                    : "N/A"}
+                </span>
               </li>
-            )}
-            <li>
-              <span className="font-medium">💾 Orientation:</span>{" "}
-              {gottenData.Orientation || "N/A"}
-            </li>
-            <li>
-              <span className="font-medium">💾 Image Height:</span>{" "}
-              {gottenData.ImageHeight || "N/A"}
-            </li>
-            <li>
-              <span className="font-medium">💾 Image Width:</span>{" "}
-              {gottenData.ImageWidth || "N/A"}
-            </li>
-            <li>
-              <span className="font-medium">💾 Copyright:</span>{" "}
-              {gottenData.Copyright || "N/A"}
-            </li>
-          </ul>
-        ) : (
-          <p className="text-gray-400 text-sm">No metadata found yet.</p>
-        )}
+              <li className="flex justify-between">
+                <span className="text-black font-medium">🌡 ISO</span>
+                <span>{gottenData.ISO || "N/A"}</span>
+              </li>
+
+              {gottenData.latitude && gottenData.longitude ? (
+                <li className="flex justify-between">
+                  <span className="text-black font-medium">📍 GPS</span>
+                  <span>
+                    {gottenData.latitude.toFixed(3)}°{" "}
+                    {gottenData.GPSLatitudeRef},{" "}
+                    {gottenData.longitude.toFixed(3)}°{" "}
+                    {gottenData.GPSLongitudeRef}
+                  </span>
+                </li>
+              ) : (
+                <li className="flex justify-between">
+                  <span className="text-black font-medium">📍 GPS</span>
+                  <span>Not available</span>
+                </li>
+              )}
+              <li className="flex justify-between">
+                <span className="text-black font-medium">🧭 Orientation</span>
+                <span>{gottenData.Orientation || "N/A"}</span>
+              </li>
+              <li className="flex justify-between">
+                <span className="text-black font-medium">
+                  📐 Image Dimensions
+                </span>
+                <span>
+                  {gottenData.ImageWidth || "?"} x{" "}
+                  {gottenData.ImageHeight || "?"} px
+                </span>
+              </li>
+            </ul>
+          ) : (
+            <p className="text-black italic">
+              No metadata found yet. Upload an image to view details.
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
